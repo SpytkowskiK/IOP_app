@@ -1,0 +1,18 @@
+{% extends "iop_app/base.html" %}
+
+{% block content %}
+
+<h4>Detale paczkomatu {{ parcel_machine.serial_number }} </h4>
+
+    <p>Dodał: {{ parcel_machine.user }}</p>
+    <p>Data dodania: {{ parcel_machine.date_added }}</p>
+
+{% for worker in workers %}
+    <p>QC{{worker.qc}}</p>
+    <p>Lista błędów: {{ worker.error_list|linebreaks }}</p>
+    <p>Suma błędów pracownika: {{ worker.error_list|length }} </p>
+{% endfor %}
+
+    <p>Błędów maszyny ogólnie: {{ errors_list }}</p>
+
+{% endblock content %}

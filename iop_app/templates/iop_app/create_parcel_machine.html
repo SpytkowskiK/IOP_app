@@ -1,0 +1,13 @@
+{% extends "iop_app/base.html" %}
+
+{% block content %}
+
+<p>Dodaj nowy paczkomat:</p>
+
+<form action="{% url 'iop_app:create_parcel_machine' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Dodaj paczkomat</button>
+</form>
+
+{% endblock content %}

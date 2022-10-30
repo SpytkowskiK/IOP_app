@@ -1,0 +1,12 @@
+{% extends "iop_app/base.html" %}
+
+{% block content %}
+<button type="submit"><a href="{% url 'iop_app:create_parcel_machine' %}">Dodaj paczkomat</a></button>
+<ul>
+    {% for parcel_machine in parcel_machines %}
+        <li><a href="{% url 'iop_app:parcel_machine_details' parcel_machine.id %}">{{ parcel_machine.serial_number }}</a></li>
+    {%empty%}
+        <li>Nie został dodany żaden paczkomat</li>
+    {%endfor%}
+</ul>
+{% endblock content %}
