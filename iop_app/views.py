@@ -22,26 +22,44 @@ def parcel_machine_details(request, parcel_machine_id):
     parcel_machine = ParcelMachine.objects.get(id=parcel_machine_id)
     workers = parcel_machine.worker_set.order_by('qc')
 
-    errors_list = []
-    for worker in workers:
-        errors = len(worker.error_list)
-        errors_list.append(errors)
-
-    context = {'parcel_machine': parcel_machine, 'workers': workers,
-               'errors_list': sum(errors_list)}
+    context = {'parcel_machine': parcel_machine, 'workers': workers}
     return render(request, 'iop_app/parcel_machine_details.html', context)
 
 
 def create_parcel_machine(request):
     """Utworzenie nowego paczkomatu w bazie danych"""
-
     if request.method == 'POST':
         form = ParcelMachineForm(data=request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('iop_app:parcel_machine')
-        else:
-            form = ParcelMachineForm()
+            paczkomat = form.save(commit=False)
+            paczkomat.user = request.user
+            paczkomat.save()
+        return redirect('/parcel_machines/')
+    else:
+        form = ParcelMachineForm()
 
     context = {'form': form}
     return render(request, 'iop_app/create_parcel_machine.html', context)
+
+
+def create_worker(request):
+    """Utworzenie workera w bazie danych"""
+    if request.method == 'POST':
+        form = WorkerForm(data=request.POST)
+        if form.is_valid():
+            worker = form.save(commit=False)
+            worker.user = request.user
+            worker.save()
+        return redirect('/parcel_machines/')
+    else:
+        form = WorkerForm()
+
+    context = {'form': form}
+    return render(request, 'iop_app/create_worker.html', context)
+
+
+def worker_details(request, worker_id):
+    worker = Worker.objects.get(id=worker_id)
+
+    context = {'worker': worker}
+    return render(request, 'iop_app/worker_details.html', context)

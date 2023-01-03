@@ -10,5 +10,7 @@ urlpatterns = [
              views.parcel_machine_details,
              name='parcel_machine_details'),
         path('parcel_machine/create_parcel_machine/',
-             views.create_parcel_machine, name='create_parcel_machine')
+             views.create_parcel_machine, name='create_parcel_machine'),
+        path('parcel_machine/create_worker/', views.create_worker, name='create_worker'),
+        path('parcel_machine/worker/<int:worker_id>', views.worker_details, name='worker_details'),
         ]

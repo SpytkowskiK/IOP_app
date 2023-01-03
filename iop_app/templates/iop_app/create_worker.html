@@ -1,0 +1,13 @@
+{% extends "iop_app/base.html" %}
+
+{% block content %}
+
+<p>Dodaj nowy worker:</p>
+
+<form action="{% url 'iop_app:create_worker' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Dodaj worker</button>
+</form>
+
+{% endblock content %}

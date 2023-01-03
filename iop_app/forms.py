@@ -14,5 +14,5 @@ class ParcelMachineForm(forms.ModelForm):
 class WorkerForm(forms.ModelForm):
     class Meta:
         model = Worker
-        fields = ['qc', 'error_list']
-        labels = {'qc': 'QC', 'error_list': 'Błędy do porawy'}
+        fields = '__all__'
+        labels = {'qc': 'QC'}

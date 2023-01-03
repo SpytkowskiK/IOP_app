@@ -8,10 +8,10 @@
     <p>Data dodania: {{ parcel_machine.date_added }}</p>
 
 {% for worker in workers %}
-    <p>QC{{worker.qc}}</p>
-    <p>Lista błędów: {{ worker.error_list|linebreaks }}</p>
-    <p>Suma błędów pracownika: {{ worker.error_list|length }} </p>
+     <li><a href="{% url 'iop_app:worker_details' worker.id %}">{{ worker.qc }} (QC)</a></li>
 {% endfor %}
+<br>
+    <a href="{% url 'iop_app:create_worker' %}">Dodaj Worker</a>
 
     <p>Błędów maszyny ogólnie: {{ errors_list }}</p>
 
