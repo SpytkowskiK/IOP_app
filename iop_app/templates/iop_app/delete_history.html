@@ -1,0 +1,31 @@
+{% extends "iop_app/base.html" %}
+
+{% block content %}
+<div class="delete_table-container">
+    <table class="delete_table">
+        <thead>
+            <tr>
+                <th>
+                    Usuń historię
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <form method="POST">
+                        {% csrf_token %}
+                        Czy na pewno usunąć całą historię?<br><br>
+                        Spowoduje to utracenie wszystkich zapisanych danych!<br><br>
+                        <button type="submit" name="delete"class="main__btn" id="delete">Usuń</button>
+                        <button class="main__btn" id="add"><a href="{% url 'iop_app:parcel_machines_all' %}">Anuluj</a></button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+
+
+{% endblock content %}

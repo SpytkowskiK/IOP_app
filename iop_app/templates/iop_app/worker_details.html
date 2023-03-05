@@ -1,0 +1,41 @@
+{% extends "iop_app/base.html" %}
+{% load my_tags %}
+
+{% block content %}
+
+<div class="machine-table-container">
+    <div class="machine-table__btn">
+    <button class="main__btn" id="delete"><a href="{% url 'iop_app:delete_worker' worker.id %}">Usuń QC</a></button>
+    <button class="main__btn" id="add"><a href="{% url 'iop_app:edit_worker' worker.id %}">Edytuj QC</a></button>
+    </div>
+    <table class="machine-table">
+        <thead>
+            <tr>
+                <th>Pracownik produkcji</th>
+                <th>Dodał</th>
+                <th>Data dodania</th>
+                <th>Błędy paczkomatu</th>
+                <th>Pracownicy</th>
+                <th>Notatka</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-label="Pracownik produkcji:">QC{{ worker.qc }}</td>
+                <td data-label="Paczkomat:">{{parcel_machine.serial_number}}</td>
+                <td data-label="Dodał:">{{ worker.parcel_machine.user }}</td>
+                <td data-label="Data dodania:">{{ worker.date_added }}</td>
+                <td data-label="Błędy pracownika:">{{ sum_of_errors }}</td>
+                <td data-label="Błędy:" class="worker__errors">
+                    {%for error_name, error_value in errors%}
+                         {% if error_value %}
+                        <div class="error_name_value">{{error_name}} : {{error_value}}</div>
+                        {%endif%}
+                    {%endfor%}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock content %}

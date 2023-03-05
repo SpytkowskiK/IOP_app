@@ -1,13 +1,25 @@
 {% extends "iop_app/base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
+    <body class="header_body">
+        <div class="header_container" id="worker">
+          <div class="header_login">Dodaj pracownika<br><br>Paczkomat {{parcel_machine.serial_number}}</div>
 
-<p>Dodaj nowy worker:</p>
+            <div class="grid" id="create_worker">
+                <form action="{% url 'iop_app:create_worker' parcel_machine.id %}" method="POST" class="create_worker">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form__field">{{ field }}</div>
+                    {% endfor %}
+                <div class="form__field" id="buttons-worker">
+                     <button type="submit" name="add" class="main__btn" id="add">Dodaj</button>
+                     <button class="main__btn" id="delete"><a href="{% url 'iop_app:parcel_machine_details' parcel_machine.id %}">Anuluj</a></button>
+                </div>
 
-<form action="{% url 'iop_app:create_worker' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button name="submit">Dodaj worker</button>
-</form>
 
+                </form>
+            </div>
+        </div>
+    </body>
 {% endblock content %}

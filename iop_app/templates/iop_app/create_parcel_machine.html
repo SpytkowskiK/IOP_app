@@ -1,13 +1,33 @@
 {% extends "iop_app/base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
-<p>Dodaj nowy paczkomat:</p>
+<body class="header_body">
+    <div class="header_container">
+      <div class="header_login">Utwórz paczkomat</div>
 
-<form action="{% url 'iop_app:create_parcel_machine' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button name="submit">Dodaj paczkomat</button>
-</form>
+        <div class="grid" id="create_machine">
+          <form action="{% url 'iop_app:create_parcel_machine' %}" method="POST" class="form create">
+            {% csrf_token %}
 
+            <div class="form__field">
+                {{ form.serial_number }}
+            </div>
+
+            <div class="form__field">
+                {{ form.description }}
+            </div>
+
+            <div class="form__field" id="buttons">
+                <button type="submit" name="add" class="main__btn" id="add">Dodaj</button>
+                <button class="main__btn" id="delete"><a href="{% url 'iop_app:parcel_machines'%}">Anuluj</a></button>
+            </div>
+
+          </form>
+
+
+        </div>
+    </div>
+</body>
 {% endblock content %}

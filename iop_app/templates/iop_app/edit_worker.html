@@ -1,0 +1,22 @@
+{% extends 'iop_app/base.html' %}
+
+{% block content %}
+    <body class="header_body">
+        <div class="header_container" id="worker">
+          <div class="header_login">Edycja pracownika QC{{worker.qc}}<br><br>Paczkomat {{parcel_machine.serial_number}}</div>
+
+            <div class="grid" id="create_worker">
+                <form action="{% url 'iop_app:edit_worker' worker.id %}" method="POST" class="create_worker">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form__field">{{ field }}</div>
+                    {% endfor %}
+                <div class="form__field" id="buttons-worker">
+                     <button type="submit" name="add" class="main__btn" id="add">Zapisz zmiany</button>
+                     <button class="main__btn" id="delete"><a href="{% url 'iop_app:worker_details' worker.id %}">Anuluj</a></button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </body>
+{% endblock content %}

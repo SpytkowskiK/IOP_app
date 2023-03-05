@@ -1,6 +1,25 @@
 {% extends "iop_app/base.html" %}
-
+{% load static %}
 {% block content %}
-<h4>Strona główna</h4>
-<a href="{% url 'iop_app:parcel_machines' %}">Paczkomaty</a>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>IOP</title>
+</head>
+<body>
+    <div class="main">
+        <div class="main__container">
+            <div class="main__content">
+                <h1>Jesteś zalogowany jako</h1>
+                <h2>{{ user.username }}</h2>
+
+                <p>Zacznijmy kontrolę jakości!</p>
+                <button class="main__btn"><a href="{% url 'iop_app:create_parcel_machine' %}">Dodaj paczkomat</a></button>
+            </div>
+            <div class="main__img--container">
+                <img id="main__img" src="{% static 'iop_app/undraw_Done_checking_re_6vyx.png' %}">
+            </div>
+        </div>
+    </div>
+</body>
 {% endblock content %}

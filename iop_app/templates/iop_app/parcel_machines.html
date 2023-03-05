@@ -1,12 +1,39 @@
 {% extends "iop_app/base.html" %}
+{% load static %}
 
 {% block content %}
-<button type="submit"><a href="{% url 'iop_app:create_parcel_machine' %}">Dodaj paczkomat</a></button>
-<ul>
-    {% for parcel_machine in parcel_machines %}
-        <li><a href="{% url 'iop_app:parcel_machine_details' parcel_machine.id %}">{{ parcel_machine.serial_number }}</a></li>
-    {%empty%}
-        <li>Nie został dodany żaden paczkomat</li>
-    {%endfor%}
-</ul>
+<div class="table-container">
+  <div class="table-buttons">
+  <button class="main__btn"><a href="{% url 'iop_app:create_parcel_machine' %}">Dodaj paczkomat</a></button>
+  <button class="main__btn-excel" id="export-excel" name="excel"><a href="{% url 'iop_app:download_xlsx' %}">Pobierz raport</a></button>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Data dodania</th>
+        <th>Dodał</th>
+        <th>Numer seryjny</th>
+        <th>Suma błędów</th>
+        <th></th>
+      </tr>
+    </thead>
+    {%if parcel_machines%}
+      <tbody>
+        {% for parcel_machine in parcel_machines %}
+          <tr>
+            <td data-label="Data dodania:">{{ parcel_machine.date_added }}</td>
+            <td data-label="Dodał:">{{ parcel_machine.user }}</td>
+            <td data-label="Numer seryjny:">{{ parcel_machine.serial_number }}</td>
+            <td data-label="Suma błędów:">{{ parcel_machine.sum_of_errors }}</td>
+            <td><a href="{% url 'iop_app:parcel_machine_details' parcel_machine.id %}" class="btn">Więcej</a></td>
+          </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+    {%else%}
+          <div style="display: flex; position: relative;">
+            <h1 style="position: absolute; top: 25vh; left:28%; max-width: 1300px; margin:-25px 0 0 -25px;">Nie dodano dzisiaj żadnego paczkomatu</h1></div>
+    {%endif%}
+  <script type="text/javascript" src="{% static '/iop_app/tablesort.js' %}"></script>
+</div>
 {% endblock content %}

@@ -1,18 +1,50 @@
 {% extends "iop_app/base.html" %}
 
 {% block content %}
+<div class="machine-table-container">
+    <div class="machine-table__btn">
+    <button class="main__btn" id="delete"><a href="{% url 'iop_app:delete_parcel_machine' parcel_machine.id %}">Usuń paczkomat</a></button>
+    <button class="main__btn" id="add"><a href="{% url 'iop_app:create_worker' parcel_machine.id %}">Dodaj QC</a></button>
+    </div>
+    <table class="machine-table">
+        <thead>
+            <tr>
+                <th>Szczegóły paczkomatu</th>
+                <th>Dodał</th>
+                <th>Data dodania</th>
+                <th>Błędy paczkomatu</th>
+                <th>Pracownicy</th>
+                <th>Notatka</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-label="Szczegóły paczkomatu:">{{ parcel_machine.serial_number }}</td>
+                <td data-label="Dodał:">{{ parcel_machine.user }}</td>
+                <td data-label="Data dodania:">{{ parcel_machine.date_added }}</td>
+                <td data-label="Błędy paczkomatu:">{{ sum_of_errors }}</td>
+                <td data-label="Pracownicy:">
+                    {% if not workers %}
+                       Brak
+                    {% else %}
+                        {% for worker in workers %}
+                            <ul><a href="{% url 'iop_app:worker_details' worker.id %}"class="machine-btn">QC{{ worker.qc }}</a></ul>
+                        {% endfor %}
+                    {% endif %}
 
-<h4>Detale paczkomatu {{ parcel_machine.serial_number }} </h4>
 
-    <p>Dodał: {{ parcel_machine.user }}</p>
-    <p>Data dodania: {{ parcel_machine.date_added }}</p>
 
-{% for worker in workers %}
-     <li><a href="{% url 'iop_app:worker_details' worker.id %}">{{ worker.qc }} (QC)</a></li>
-{% endfor %}
-<br>
-    <a href="{% url 'iop_app:create_worker' %}">Dodaj Worker</a>
-
-    <p>Błędów maszyny ogólnie: {{ errors_list }}</p>
+                </td>
+                <td data-label="Notatka:">
+                     {% if not parcel_machine.description %}
+                       Brak
+                    {% else %}
+                        {{ parcel_machine.description }}
+                    {% endif %}
+                    </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 {% endblock content %}

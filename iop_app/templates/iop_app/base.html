@@ -1,12 +1,53 @@
+{% load static %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'iop_app/iop_favicon.ico' %}">
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>IOP</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static '/iop_app/style.css' %}">
+    <script src="https://kit.fontawesome.com/78be344ed0.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<p>
-    <a href="{% url 'iop_app:index' %}">IOP</a>
-</p>
-{% block content %} {% endblock content %}
+<!--navbar section-->
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="{% url 'iop_app:index' %}" id="navbar__logo"><i class="fa-solid fa-box"></i><strong>IOP</strong></a>
+            <div class="navbar__toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu">
+                <li class="navbar__item">
+                    <a href="{% url 'iop_app:parcel_machines' %}" class="navbar__links">Paczkomaty</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="{% url 'iop_app:parcel_machines_all' %}" class="navbar__links">Historia</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="navbar__btn">
+                        <a href="{% url 'users:logout' %}" class="button">Wyloguj</a>
+                    </li>
+                {% else %}
+                    <li class="navbar__btn">
+                        <a href="{% url 'users:login' %}" class="button">Zaloguj</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <script type="text/javascript" src="{% static '/iop_app/app.js' %}"></script>
+<div class="main">
+    {% block content %}
+    {% endblock content %}
+</div>
 </body>
 </html>

@@ -1,0 +1,36 @@
+{% extends "iop_app/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="table-container" xmlns="http://www.w3.org/1999/html">
+  <button class="main__btn" id="delete" name="delete"><a href="{% url 'iop_app:delete_history'%}">Usuń historię</a></button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Data dodania</th>
+        <th>Dodał</th>
+        <th>Numer seryjny</th>
+        <th>Suma błędów</th>
+        <th></th>
+      </tr>
+    </thead>
+    {%if parcel_machines%}
+      <tbody>
+        {% for parcel_machine in parcel_machines %}
+          <tr>
+            <td data-label="Data dodania:">{{ parcel_machine.date_added }}</td>
+            <td data-label="Dodał:">{{ parcel_machine.user }}</td>
+            <td data-label="Numer seryjny:">{{ parcel_machine.serial_number }}</td>
+            <td data-label="Suma błędów:">{{ parcel_machine.sum_of_errors }}</td>
+            <td><a href="{% url 'iop_app:parcel_machine_details' parcel_machine.id %}" class="btn">Więcej</a></td>
+          </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+    {%else%}
+          <div style="display: flex; position: relative;">
+            <h1 style="position: absolute; top: 25vh; left:35%; max-width: 1300px; margin:-25px 0 0 -25px; align-items:center;">Brak paczkomatów w historii</h1></div>
+    {%endif%}
+  <script type="text/javascript" src="{% static '/iop_app/tablesort.js' %}"></script>
+</div>
+{% endblock content %}

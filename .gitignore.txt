@@ -1,0 +1,3 @@
+virtual/
+_pychache/
+*.sqlite3

@@ -1,0 +1,30 @@
+{% extends "iop_app/base.html" %}
+
+{% block content %}
+
+<div class="delete_table-container">
+    <table class="delete_table">
+        <thead>
+            <tr>
+                <th>
+                    Usuń pracownika
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <form method="POST">
+                        {% csrf_token %}
+                        Czy na pewno usunąć pracownika <strong>QC{{worker.qc}}</strong> ?<br>
+                        <button type="submit" name="delete" class="main__btn" id="delete">Usuń</button>
+                        <button class="main__btn" id="add"><a href="{% url 'iop_app:worker_details' worker.id %}">Anuluj</a></button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+
+{% endblock content %}
